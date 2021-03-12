@@ -3,6 +3,7 @@ package hu.bme.mit.yakindu.analysis.workhere;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.junit.Test;
+import java.util.HashSet;
 import org.yakindu.sct.model.sgraph.State;
 import org.yakindu.sct.model.sgraph.Statechart;
 import org.yakindu.sct.model.sgraph.Transition;
@@ -26,11 +27,23 @@ public class Main {
 		// Reading model
 		Statechart s = (Statechart) root;
 		TreeIterator<EObject> iterator = s.eAllContents();
+		int unnamedCount = 0;
+		HashSet<String> stateNames = new HashSet<String>();
 		while (iterator.hasNext()) {
 			EObject content = iterator.next();
 			if(content instanceof State) {
 				State state = (State) content;
-				System.out.println(state.getName());
+				if(state.getName().isEmpty()) {
+					String newName = "Unnamed State" + unnamedCount;
+					while(stateNames.contains(newName)) {
+						unnamedCount++;
+						newName = "Unnamed State" + unnamedCount;
+					}
+					System.out.println("Unnamed state found. Suggested name: " + newName);
+				} else {
+					System.out.println(state.getName());
+				}
+				
 				if(state.getOutgoingTransitions().isEmpty()) {
 					System.out.println(state.getName() + " is a trap state.");
 				}
