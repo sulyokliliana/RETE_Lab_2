@@ -31,6 +31,9 @@ public class Main {
 			if(content instanceof State) {
 				State state = (State) content;
 				System.out.println(state.getName());
+				if(state.getOutgoingTransitions().isEmpty()) {
+					System.out.println(state.getName() + " is a trap state.");
+				}
 			}
 			if(content instanceof Transition) {
 				Transition transition = (Transition) content;
