@@ -40,6 +40,7 @@ public class Main {
 						newName = "Unnamed State" + unnamedCount;
 					}
 					System.out.println("Unnamed state found. Suggested name: " + newName);
+					state.setName(newName);
 				} else {
 					System.out.println(state.getName());
 				}
