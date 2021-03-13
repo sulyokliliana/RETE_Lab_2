@@ -9,43 +9,47 @@ import hu.bme.mit.yakindu.analysis.example.ExampleStatemachine;
 import hu.bme.mit.yakindu.analysis.example.IExampleStatemachine;
 
 public class RunStatechart {
-	
+
 	public static void main(String[] args) throws IOException {
 		ExampleStatemachine s = new ExampleStatemachine();
 		s.setTimer(new TimerService());
 		RuntimeService.getInstance().registerStatemachine(s, 200);
 		s.init();
 		s.enter();
-		
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String inString = reader.readLine();
 		while(inString != null) {
 			switch(inString) {
-			case "start":
-				s.raiseStart();
-				break;
-			case "white":
-				s.raiseWhite();
-				break;
-			case "black":
-				s.raiseBlack();
-				break;
-			case "exit":
-				System.exit(0);
-			default: 
-				System.out.println("Unknown event. Try again!");
-				break;
+				case "start":
+					s.raiseStart();
+					break;
+				case "white":
+					s.raiseWhite();
+					break;
+				case "black":
+					s.raiseBlack();
+					break;
+				case "green":
+					s.raiseGreen();
+					break;
+				case "exit":
+					System.exit(0);
+				default:
+					System.out.println("Unknown event. Try again!");
+					break;
 			}
-			inString = reader.readLine();
-			s.runCycle();
-			print(s);
+		inString = reader.readLine();
+		s.runCycle();
+		print(s);
 		}
-		
+
 		System.exit(0);
 	}
 
 	public static void print(IExampleStatemachine s) {
-		System.out.println("W = " + s.getSCInterface().getWhiteTime());
-		System.out.println("B = " + s.getSCInterface().getBlackTime());
+		System.out.println("whiteTime = " + s.getSCInterface().getWhiteTime());
+		System.out.println("blackTime = " + s.getSCInterface().getBlackTime());
+		System.out.println("greenTime = " + s.getSCInterface().getGreenTime());
 	}
 }
