@@ -42,7 +42,8 @@ public class RunStatechart {
 			inString = reader.readLine();
 			s.runCycle();
 			print(s);
-		}		
+		}
+		
 	}
 
 	public static void print(IExampleStatemachine s) {
